@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PUT and DELETE Example</title>
+    <script>
+        // Function to send a PUT request
+        function sendPutRequest() {
+            const data = {
+                name: document.getElementById("name").value,
+                subject: document.getElementById("subject").value
+            };
+
+            fetch('/update_score', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(data)
+            })
+            .then(response => response.text())
+            .then(data => alert("PUT Response: " + data))
+            .catch(error => console.error('Error:', error));
+        }
+
+        // Function to send a DELETE request
+        function sendDeleteRequest() {
+            const subject = document.getElementById("subject").value;
+
+            fetch(`/delete_score/${subject}`, {
+                method: 'DELETE'
+            })
+            .then(response => response.text())
+            .then(data => alert("DELETE Response: " + data))
+            .catch(error => console.error('Error:', error));
+        }
+    </script>
+</head>
+<body>
+    <h1>Update or Delete Score</h1>
+
+    <label for="name">Name:</label><br>
+    <input type="text" id="name" name="name" required><br><br>
+
+    <label for="subject">Subject:</label><br>
+    <input type="text" id="subject" name="subject" required><br><br>
+
+    <label for="score">Score:</label><br>
+    <input type="number" id="score" name="score" required><br><br>
+
+    <button type="button" onclick="sendPutRequest()">Update Score (PUT)</button>
+    <button type="button" onclick="sendDeleteRequest()">Delete Score (DELETE)</button>
+</body>
+</html>
